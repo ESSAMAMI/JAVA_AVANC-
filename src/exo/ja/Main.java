@@ -1,6 +1,5 @@
 package exo.ja;
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,6 +10,46 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
+
+    public static void main(String[] args) {
+
+        System.out.println("================= EXERCICE 1 - SWAP =================");
+        System.out.println("================= AVANT SWAP =================");
+        double [] a = {10,20,30};
+        double [] b = {40,50,60};
+        System.out.println(a);
+        System.out.println(b);
+
+        System.out.println("================= APRES SWAP =================");
+        double [] x = a;
+        a = b;
+        b = x;
+        System.out.println(a);
+        System.out.println(b);
+
+
+        System.out.println("================= EXERCICE 2 - STRING BUILDER =================");
+        StringBuilder [] sbTab ;
+        sbTab = new StringBuilder[10];
+        for (int i =0; i < sbTab.length; i++ ){
+            sbTab[i]= new StringBuilder("Hello");
+            System.out.println("=====> "+sbTab[i]);
+        }
+
+        System.out.println("================= EXERCICE 2 - BUFFER READER =================\n");
+        readFileSum("D:/Projet/src/exo/util/exo1.txt");
+        readFileFoundByEmail("D:/Projet/src/exo/util/exo1.txt", "geekoid@att.net");
+
+
+        System.out.println("================= EXERCICE 3 - RUNTIME EXCEPTION =================\n");
+        String[] strings={"523453434"};
+        ArrayList<Exception> exceptions = calculetteSum(strings);
+
+        for(Exception excpt: exceptions){
+
+            System.out.println(excpt.getMessage());
+        }
+    }
 
     public static void readFileSum(String path){
 
@@ -71,37 +110,55 @@ public class Main {
         System.out.println("RUN TIME MS : " +durMs);
     }
 
-    public static void main(String[] args) {
+    public static ArrayList<Exception> calculetteSum(String[] strings){
 
-        System.out.println("================= EXERCICE 1 - SWAP =================");
-        System.out.println("================= AVANT SWAP =================");
-        double [] a = {10,20,30};
-        double [] b = {40,50,60};
-        System.out.println(a);
-        System.out.println(b);
+        int val = 0;
+        int sum = 0;
+        int check = 0;
+        ArrayList<Exception> exceptions;
+        exceptions = new ArrayList<Exception>();
 
-        System.out.println("================= APRES SWAP =================");
-        double [] x = a;
-        a = b;
-        b = x;
-        System.out.println(a);
-        System.out.println(b);
+        for(int i = 0; i < strings.length; i++){
 
+            String string = strings[i];
+            for(int j = 0; j < string.length(); j++){
 
-        System.out.println("================= EXERCICE 2 - STRING BUILDER =================");
-        StringBuilder [] sbTab ;
-        sbTab = new StringBuilder[10];
-        for (int i =0; i < sbTab.length; i++ ){
-            sbTab[i]= new StringBuilder("Hello");
-            System.out.println("=====> "+sbTab[i]);
+                String st = string.substring(j, j+1);
+                try{
+
+                    val = Integer.parseInt(st);
+                    sum += val;
+
+                }catch (Exception exception){
+
+                    if(sum > 0){
+
+                        //System.out.println(exception.getMessage());
+                        exceptions.add(new Exception(exception));
+                        check = 1;
+
+                    }else{
+
+                        //System.out.println(exception.getMessage());
+                        exceptions.add(new Exception(exception));
+                        check = -1;
+                    }
+                }
+            }
         }
 
-        System.out.println("================= EXERCICE 2 - BUFFER READER =================\n");
-        readFileSum("D:/Projet/src/exo/util/exo1.txt");
-        readFileFoundByEmail("D:/Projet/src/exo/util/exo1.txt", "geekoid@att.net");
+        if(check == -1){
 
+            System.out.println("FUNCTION IS WRONG...");
 
+        }else if (check == 1){
 
+            System.out.println("\nFUNCTION IS WRONG... BUT THE SUM WAS CALCULETED FOR THE FOINDED NUMBER IN THE STRING OF CHARACTERS");
+            System.out.println("SUM : " + sum);
+        }else{
+            System.out.println("NO ERROR ☺");
+            System.out.println("SUM : " + sum);
+        }
+        return exceptions;
     }
-
 }
